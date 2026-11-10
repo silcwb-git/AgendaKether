@@ -1,0 +1,11 @@
+@AgendaKether.Api_HostAddress = http://localhost:5068
+
+GET {{AgendaKether.Api_HostAddress}}/openapi/v1.json
+Accept: application/json
+
+###
+
+GET {{AgendaKether.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

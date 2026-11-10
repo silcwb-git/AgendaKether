@@ -1,0 +1,13 @@
+<Solution>
+  <Folder Name="/src/">
+    <Project Path="src/AgendaKether.Api/AgendaKether.Api.csproj" />
+    <Project Path="src/AgendaKether.Application/AgendaKether.Application.csproj" />
+    <Project Path="src/AgendaKether.Domain/AgendaKether.Domain.csproj" />
+    <Project Path="src/AgendaKether.Infrastructure/AgendaKether.Infrastructure.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/AgendaKether.Api.Tests/AgendaKether.Api.Tests.csproj" />
+    <Project Path="tests/AgendaKether.Application.Tests/AgendaKether.Application.Tests.csproj" />
+    <Project Path="tests/AgendaKether.Domain.Tests/AgendaKether.Domain.Tests.csproj" />
+  </Folder>
+</Solution>
