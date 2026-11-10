@@ -489,3 +489,11 @@ appsettings.Development.json
 *.db
 *.db-shm
 *.db-wal
+
+# SQLite local
+*.db
+*.db-shm
+*.db-wal
+
+# Segredos locais
+appsettings.Development.json
