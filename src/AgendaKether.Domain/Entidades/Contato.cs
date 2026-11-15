@@ -18,6 +18,7 @@ public class Contato
     public DateTime CriadoEm { get; private set; }
     public DateTime? AtualizadoEm { get; private set; }
 
+    // Construtor privado para impedir a criação direta de instâncias - usar o método de fábrica Criar.
     private Contato() { }
 
     public static Contato Criar(string nome, string endereco, string telefone, string email)
