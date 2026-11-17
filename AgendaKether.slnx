@@ -9,5 +9,6 @@
     <Project Path="tests/AgendaKether.Api.Tests/AgendaKether.Api.Tests.csproj" />
     <Project Path="tests/AgendaKether.Application.Tests/AgendaKether.Application.Tests.csproj" />
     <Project Path="tests/AgendaKether.Domain.Tests/AgendaKether.Domain.Tests.csproj" />
+    <Project Path="tests/AgendaKether.Infrastructure.Tests/AgendaKether.Infrastructure.Tests.csproj" />
   </Folder>
 </Solution>
