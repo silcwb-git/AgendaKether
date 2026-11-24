@@ -4,6 +4,7 @@ using AgendaKether.Infrastructure.Persistencia.Repositorios;
 using FluentAssertions;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
+using AgendaKether.Domain.Excecoes;
 
 namespace AgendaKether.Infrastructure.Tests;
 
@@ -115,7 +116,7 @@ public class ContatoRepositoryTests : IDisposable
     }
 
     [Fact]
-    public async Task Adicionar_ComEmailDuplicado_DeveFalharNoBanco()
+    public async Task Adicionar_ComEmailDuplicado_DeveLancarDomainException()
     {
         var a = Contato.Criar("Joao", "Rua A", "11987654321", "mesmo@kether.com");
         var b = Contato.Criar("Maria", "Rua B", "11999998888", "mesmo@kether.com");
@@ -126,7 +127,8 @@ public class ContatoRepositoryTests : IDisposable
         await _sut.Adicionar(b);
         var acao = () => _sut.SalvarAlteracoes();
 
-        await acao.Should().ThrowAsync<DbUpdateException>();
+        await acao.Should().ThrowAsync<DomainException>()
+                  .WithMessage("*e-mail*");
     }
 
     public void Dispose()

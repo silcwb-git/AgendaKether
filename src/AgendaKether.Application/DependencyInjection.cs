@@ -4,6 +4,7 @@ using AgendaKether.Application.Contatos.Commands.CriarContato;
 using AgendaKether.Application.Contatos.Commands.ExcluirContato;
 using AgendaKether.Application.Contatos.Queries.ListarContatos;
 using AgendaKether.Application.Contatos.Queries.ObterContatoPorId;
+using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace AgendaKether.Application;
@@ -12,6 +13,8 @@ public static class DependencyInjection
 {
     public static IServiceCollection AddApplication(this IServiceCollection services)
     {
+        services.AddValidatorsFromAssemblyContaining<CriarContatoValidator>();
+
         services.AddScoped<ICommandHandler<CriarContatoCommand, Guid>, CriarContatoHandler>();
         services.AddScoped<ICommandHandler<AtualizarContatoCommand, bool>, AtualizarContatoHandler>();
         services.AddScoped<ICommandHandler<ExcluirContatoCommand, bool>, ExcluirContatoHandler>();

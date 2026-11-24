@@ -7,8 +7,6 @@ public class AtualizarContatoValidator : AbstractValidator<AtualizarContatoComma
 {
     public AtualizarContatoValidator()
     {
-        RuleFor(x => x.Id).NotEmpty().WithMessage("Id é obrigatório.");
-
         RuleFor(x => x.Nome)
             .NotEmpty().WithMessage("Nome é obrigatório.")
             .MinimumLength(Contato.NomeTamanhoMinimo)

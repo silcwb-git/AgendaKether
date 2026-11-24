@@ -10,16 +10,16 @@ public class CriarContatoValidator : AbstractValidator<CriarContatoCommand>
         RuleFor(x => x.Nome)
             .NotEmpty().WithMessage("Nome é obrigatório.")
             .MinimumLength(Contato.NomeTamanhoMinimo)
-            .MaximumLength(Contato.NomeTamanhoMaximo);
+                .WithMessage($"Nome deve ter no mínimo {Contato.NomeTamanhoMinimo} caracteres.")
+            .MaximumLength(Contato.NomeTamanhoMaximo)
+                .WithMessage($"Nome deve ter no máximo {Contato.NomeTamanhoMaximo} caracteres.");
 
         RuleFor(x => x.Endereco)
             .NotEmpty().WithMessage("Endereço é obrigatório.")
-            .MaximumLength(Contato.EnderecoTamanhoMaximo);
+            .MaximumLength(Contato.EnderecoTamanhoMaximo)
+                .WithMessage($"Endereço deve ter no máximo {Contato.EnderecoTamanhoMaximo} caracteres.");
 
-        RuleFor(x => x.Telefone)
-            .NotEmpty().WithMessage("Telefone é obrigatório.");
-
-        RuleFor(x => x.Email)
-            .NotEmpty().WithMessage("E-mail é obrigatório.");
+        RuleFor(x => x.Telefone).NotEmpty().WithMessage("Telefone é obrigatório.");
+        RuleFor(x => x.Email).NotEmpty().WithMessage("E-mail é obrigatório.");
     }
 }

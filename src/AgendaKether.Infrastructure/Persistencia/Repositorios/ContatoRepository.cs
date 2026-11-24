@@ -1,4 +1,5 @@
 using AgendaKether.Domain.Entidades;
+using AgendaKether.Domain.Excecoes;
 using AgendaKether.Domain.Repositorios;
 using Microsoft.EntityFrameworkCore;
 
@@ -69,6 +70,25 @@ public class ContatoRepository : IContatoRepository
 
     public async Task SalvarAlteracoes(CancellationToken ct = default)
     {
-        await _db.SaveChangesAsync(ct);
+        try
+        {
+            await _db.SaveChangesAsync(ct);
+        }
+        catch (DbUpdateException ex) when (EhViolacaoDeUnicidade(ex))
+        {
+            // Traduz o erro técnico do banco em regra de negócio.
+            // A Api não precisa (nem deve) conhecer DbUpdateException.
+            throw new DomainException("Já existe um contato com este e-mail.");
+        }
+    }
+
+    private static bool EhViolacaoDeUnicidade(DbUpdateException ex)
+    {
+        var mensagem = ex.InnerException?.Message;
+        if (string.IsNullOrEmpty(mensagem))
+            return false;
+
+        return mensagem.Contains("UNIQUE constraint failed", StringComparison.OrdinalIgnoreCase)
+            || mensagem.Contains("duplicate key", StringComparison.OrdinalIgnoreCase);
     }
 }
