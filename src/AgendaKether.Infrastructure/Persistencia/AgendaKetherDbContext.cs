@@ -9,6 +9,7 @@ public class AgendaKetherDbContext : DbContext
         : base(options) { }
 
     public DbSet<Contato> Contatos => Set<Contato>();
+    public DbSet<Usuario> Usuarios => Set<Usuario>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

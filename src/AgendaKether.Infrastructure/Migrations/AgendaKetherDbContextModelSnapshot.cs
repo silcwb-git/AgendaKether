@@ -15,7 +15,7 @@ partial class AgendaKetherDbContextModelSnapshot : ModelSnapshot
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261117220549_InitialCreate";
+    public override string LastMigrationId => "20261125192719_AdicionaUsuario";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
@@ -52,6 +52,35 @@ partial class AgendaKetherDbContextModelSnapshot : ModelSnapshot
                     .HasDatabaseName("IX_Contatos_Nome");
 
                 b.ToTable("Contatos");
+            });
+
+        modelBuilder.Entity("AgendaKether.Domain.Entidades.Usuario", b =>
+            {
+                b.Property<Guid>("Id")
+                    .HasColumnType("TEXT");
+
+                b.Property<DateTime?>("AtualizadoEm")
+                    .HasColumnType("TEXT");
+
+                b.Property<DateTime>("CriadoEm")
+                    .HasColumnType("TEXT");
+
+                b.Property<bool>("Excluido")
+                    .HasColumnType("INTEGER");
+
+                b.Property<string>("Nome")
+                    .IsRequired()
+                    .HasMaxLength(120)
+                    .HasColumnType("TEXT");
+
+                b.Property<string>("SenhaHash")
+                    .IsRequired()
+                    .HasMaxLength(200)
+                    .HasColumnType("TEXT");
+
+                b.HasKey("Id");
+
+                b.ToTable("Usuarios");
             });
 
         modelBuilder.Entity("AgendaKether.Domain.Entidades.Contato", b =>
@@ -102,6 +131,35 @@ partial class AgendaKetherDbContextModelSnapshot : ModelSnapshot
                     .IsRequired();
 
                 b.Navigation("Telefone")
+                    .IsRequired();
+            });
+
+        modelBuilder.Entity("AgendaKether.Domain.Entidades.Usuario", b =>
+            {
+                b.OwnsOne("AgendaKether.Domain.ValueObjects.Email", "Email", b1 =>
+                    {
+                        b1.Property<Guid>("UsuarioId")
+                            .HasColumnType("TEXT");
+
+                        b1.Property<string>("Endereco")
+                            .IsRequired()
+                            .HasMaxLength(254)
+                            .HasColumnType("TEXT")
+                            .HasColumnName("Email");
+
+                        b1.HasKey("UsuarioId");
+
+                        b1.HasIndex("Endereco")
+                            .IsUnique()
+                            .HasDatabaseName("IX_Usuarios_Email_Unique");
+
+                        b1.ToTable("Usuarios");
+
+                        b1.WithOwner()
+                            .HasForeignKey("UsuarioId");
+                    });
+
+                b.Navigation("Email")
                     .IsRequired();
             });
 #pragma warning restore 612, 618

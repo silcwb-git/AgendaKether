@@ -1,9 +1,12 @@
 using AgendaKether.Application.Abstractions;
+using AgendaKether.Application.Auth.Commands.Login;
+using AgendaKether.Application.Auth.Commands.RegistrarUsuario;
 using AgendaKether.Application.Contatos.Commands.AtualizarContato;
 using AgendaKether.Application.Contatos.Commands.CriarContato;
 using AgendaKether.Application.Contatos.Commands.ExcluirContato;
 using AgendaKether.Application.Contatos.Queries.ListarContatos;
 using AgendaKether.Application.Contatos.Queries.ObterContatoPorId;
+using AgendaKether.Application.Dtos;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -15,12 +18,16 @@ public static class DependencyInjection
     {
         services.AddValidatorsFromAssemblyContaining<CriarContatoValidator>();
 
+        // Contatos
         services.AddScoped<ICommandHandler<CriarContatoCommand, Guid>, CriarContatoHandler>();
         services.AddScoped<ICommandHandler<AtualizarContatoCommand, bool>, AtualizarContatoHandler>();
         services.AddScoped<ICommandHandler<ExcluirContatoCommand, bool>, ExcluirContatoHandler>();
-
-        services.AddScoped<IQueryHandler<ObterContatoPorIdQuery, Dtos.ContatoDto?>, ObterContatoPorIdHandler>();
+        services.AddScoped<IQueryHandler<ObterContatoPorIdQuery, ContatoDto?>, ObterContatoPorIdHandler>();
         services.AddScoped<IQueryHandler<ListarContatosQuery, ListarContatosResult>, ListarContatosHandler>();
+
+        // Autenticação
+        services.AddScoped<ICommandHandler<RegistrarUsuarioCommand, Guid>, RegistrarUsuarioHandler>();
+        services.AddScoped<ICommandHandler<LoginCommand, TokenDto>, LoginHandler>();
 
         return services;
     }

@@ -1,6 +1,8 @@
+using AgendaKether.Application.Abstractions;
 using AgendaKether.Domain.Repositorios;
 using AgendaKether.Infrastructure.Persistencia;
 using AgendaKether.Infrastructure.Persistencia.Repositorios;
+using AgendaKether.Infrastructure.Seguranca;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -19,13 +21,19 @@ public static class DependencyInjection
         services.AddDbContext<AgendaKetherDbContext>(options =>
             options.UseSqlite(connectionString));
 
-        // Uma única instância concreta por request
+        // Contatos
         services.AddScoped<ContatoRepository>();
-
-        // As três interfaces apontam para a MESMA instância
         services.AddScoped<IContatoRepository>(sp => sp.GetRequiredService<ContatoRepository>());
         services.AddScoped<IContatoLeitura>(sp => sp.GetRequiredService<ContatoRepository>());
         services.AddScoped<IContatoEscrita>(sp => sp.GetRequiredService<ContatoRepository>());
+
+        // Usuários
+        services.AddScoped<IUsuarioRepository, UsuarioRepository>();
+
+        // Segurança
+        services.Configure<JwtSettings>(configuration.GetSection("Jwt"));
+        services.AddSingleton<ISenhaHasher, BcryptSenhaHasher>();
+        services.AddScoped<ITokenService, JwtTokenService>();
 
         return services;
     }

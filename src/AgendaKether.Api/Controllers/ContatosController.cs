@@ -1,3 +1,5 @@
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 using AgendaKether.Api.Filtros;
 using AgendaKether.Application.Abstractions;
 using AgendaKether.Application.Contatos.Commands.AtualizarContato;
@@ -11,6 +13,8 @@ using Microsoft.AspNetCore.Mvc;
 namespace AgendaKether.Api.Controllers;
 
 [ApiController]
+[Authorize]
+[Authorize]
 [Route("api/contatos")]
 public class ContatosController : ControllerBase
 {
